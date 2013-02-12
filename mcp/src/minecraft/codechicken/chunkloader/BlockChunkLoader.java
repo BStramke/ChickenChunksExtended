@@ -42,7 +42,7 @@ public class BlockChunkLoader extends BlockContainer
 	@Override
 	public boolean isBlockSolidOnSide(World world, int x, int y, int z, ForgeDirection side)
 	{
-	    if(world.getBlockMetadata(x, y, z) >= 1)
+	    if(world.getBlockMetadata(x, y, z) == 1)
 	        return false;
 	    
 	    return side == ForgeDirection.DOWN;
@@ -51,9 +51,6 @@ public class BlockChunkLoader extends BlockContainer
 	@Override
 	public boolean canConnectRedstone(IBlockAccess world, int x, int y, int z, int side)
 	{
-		if(world.getBlockMetadata(x, y, z) == 2)
-			return false;
-		
 	    return true;
 	}
 
@@ -65,7 +62,6 @@ public class BlockChunkLoader extends BlockContainer
                 setBlockBounds(0, 0, 0, 1, 0.75F, 1);
                 break;
             case 1:
-            case 2:
                 setBlockBounds(0.25F, 0, 0.25F, 0.75F, 0.4375F, 0.75F);
                 break;
         }
@@ -74,17 +70,14 @@ public class BlockChunkLoader extends BlockContainer
     @Override
     public int getBlockTextureFromSideAndMetadata(int side, int meta)
     {
-    	int nMetaShift = meta;
-    	if(meta == 2)
-    		nMetaShift = 1;
-        return (side > 2 ? 2 : side) + nMetaShift*3;
+        return (side > 2 ? 2 : side) + meta*3;
     }
 	
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9)
 	{
         int meta = world.getBlockMetadata(x, y, z);
-		if(meta != 0 && meta != 2 || player.isSneaking())
+		if(meta != 0 || player.isSneaking())
 		    return false;
 		
 	    if(world.isRemote)
@@ -111,7 +104,7 @@ public class BlockChunkLoader extends BlockContainer
 	@Override
 	public TileEntity createNewTileEntity(World world, int meta)
 	{
-		if(meta == 0 || meta == 2)
+		if(meta == 0)
 			return new TileChunkLoader();
 		else if(meta == 1)
 		    return new TileSpotLoader();
@@ -143,7 +136,6 @@ public class BlockChunkLoader extends BlockContainer
 	{
         list.add(new ItemStack(this, 1, 0));
         list.add(new ItemStack(this, 1, 1));
-        list.add(new ItemStack(this, 1, 2));
 	}
 	
 	@Override

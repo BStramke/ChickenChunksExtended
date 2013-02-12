@@ -23,8 +23,6 @@ public class ChunkLoaderProxy
 		GameRegistry.registerBlock(ChickenChunks.blockChunkLoader, ItemChunkLoader.class, "chickenChunkLoader");
         LanguageRegistry.addName(new ItemStack(ChickenChunks.blockChunkLoader, 1, 0), "Chunk Loader");
         LanguageRegistry.addName(new ItemStack(ChickenChunks.blockChunkLoader, 1, 1), "Spot Loader");
-        
-        LanguageRegistry.addName(new ItemStack(ChickenChunks.blockChunkLoader, 1, 2), "Activated Chunk Loader");
 
         GameRegistry.registerTileEntity(TileChunkLoader.class, "ChickenChunkLoader");
         GameRegistry.registerTileEntity(TileSpotLoader.class, "ChickenSpotLoader");
