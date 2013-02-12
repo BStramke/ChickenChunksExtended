@@ -68,6 +68,13 @@ public class TileChunkLoaderRenderer extends TileEntitySpecialRenderer
             height = 0.5;
             size = 0.05;
         }
+        else if(chunkLoader instanceof TilePersonalChunkLoader)
+        {
+        	TilePersonalChunkLoader ctile = (TilePersonalChunkLoader)chunkLoader;
+            rot /= Math.pow(ctile.radius, 0.2);
+            height = 0.9;
+            size = 0.08;
+        }
         else
             return;
         
@@ -79,7 +86,7 @@ public class TileChunkLoaderRenderer extends TileEntitySpecialRenderer
             active -= f/20D;
         
         if(renderInfo.showLasers)
-        {	        
+        {
 	        GL11.glDisable(GL11.GL_TEXTURE_2D);
 	        GL11.glDisable(GL11.GL_LIGHTING);
 	        GL11.glDisable(GL11.GL_FOG);

@@ -12,10 +12,13 @@ public class GuiChunkLoader extends GuiScreen
 	public GuiButton laserButton;
 	public GuiButton shapeButton;
 	public TileChunkLoader tile;
+	private boolean isPersonalChunkLoader = false;
 	
 	public GuiChunkLoader(TileChunkLoader tile)
 	{
 		this.tile = tile;
+		if(tile instanceof TilePersonalChunkLoader)
+			this.isPersonalChunkLoader = true;
 	}
 
 	@SuppressWarnings("unchecked")

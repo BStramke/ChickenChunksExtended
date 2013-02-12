@@ -627,6 +627,12 @@ public class ChunkLoaderManager
         cleanupTicks = config.getTag("cleanuptime").setComment("The number of ticks to wait between attempting to unload orphaned chunks").getIntValue(1200);
         reloadDimensions = config.getTag("reload-dimensions").setComment("Set to false to disable the automatic reloading of mystcraft dimensions on server restart").getBooleanValue(true);
         maxChunks = config.getTag("maxchunks").setComment("The maximum number of chunks per chunkloader").getIntValue(400);
+        
+        
+        int nMinutes = config.getTag("personalloader.activationtime.minutes").setComment("The time in Minutes the Personal Loader is active").getIntValue(0);
+        int nHours = config.getTag("personalloader.activationtime.hours").setComment("The time in Hours the Personal Loader is active").getIntValue(4);
+        
+        ChickenChunks.LoaderActiveTime = (nMinutes * 60 + nHours * 60 * 60) * 1000;
     }
 
     public static void addChunkLoader(IChickenChunkLoader loader)

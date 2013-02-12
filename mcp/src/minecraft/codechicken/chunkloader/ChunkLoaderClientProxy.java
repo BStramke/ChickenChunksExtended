@@ -18,6 +18,7 @@ public class ChunkLoaderClientProxy  extends ChunkLoaderProxy
         MinecraftForgeClient.preloadTexture("/codechicken/chunkloader/block.png");
         ClientRegistry.bindTileEntitySpecialRenderer(TileChunkLoader.class, new TileChunkLoaderRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(TileSpotLoader.class, new TileChunkLoaderRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(TilePersonalChunkLoader.class, new TileChunkLoaderRenderer());
         RenderingRegistry.registerBlockHandler(new ChunkLoaderSBRH());
 		
 	}

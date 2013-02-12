@@ -31,7 +31,9 @@ public class ChickenChunks
 
 	@Instance(value="ChickenChunks")
 	public static ChickenChunks instance;
-	
+
+	public static long LoaderActiveTime;
+		
 	@PreInit
 	public void preInit(FMLPreInitializationEvent event)
 	{

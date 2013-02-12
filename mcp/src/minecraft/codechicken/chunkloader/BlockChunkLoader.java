@@ -59,6 +59,7 @@ public class BlockChunkLoader extends BlockContainer
         switch(metadata)
         {
             case 0:
+            case 2:	
                 setBlockBounds(0, 0, 0, 1, 0.75F, 1);
                 break;
             case 1:
@@ -70,23 +71,33 @@ public class BlockChunkLoader extends BlockContainer
     @Override
     public int getBlockTextureFromSideAndMetadata(int side, int meta)
     {
-        return (side > 2 ? 2 : side) + meta*3;
+    	if(meta==2)
+    		return (side > 2 ? 2 : side); //treat it as if its meta=0
+    	else
+    		return (side > 2 ? 2 : side) + meta*3;
     }
 	
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9)
 	{
         int meta = world.getBlockMetadata(x, y, z);
-		if(meta != 0 || player.isSneaking())
+               
+		if(meta == 1 || player.isSneaking())
 		    return false;
 		
+		
+		TileChunkLoader tile = (TileChunkLoader) world.getBlockTileEntity(x, y, z);
 	    if(world.isRemote)
 	    {
-			TileChunkLoader tile = (TileChunkLoader) world.getBlockTileEntity(x, y, z);
 			if(tile.owner == null || tile.owner.equals(player.username))
 				ChickenChunks.proxy.openGui(tile);
 			else
 				player.addChatMessage("This Chunkloader does not belong to you.");
+	    }
+	    else
+	    {
+	    	if(tile instanceof TilePersonalChunkLoader && (tile.owner == null || tile.owner.equals(player.username))) 
+	    		((TilePersonalChunkLoader) tile).nextUnloadTime =  System.currentTimeMillis() + ChickenChunks.LoaderActiveTime;
 	    }
         return true;
 	}
@@ -108,6 +119,8 @@ public class BlockChunkLoader extends BlockContainer
 			return new TileChunkLoader();
 		else if(meta == 1)
 		    return new TileSpotLoader();
+		else if(meta == 2)
+			return new TilePersonalChunkLoader();
 		else
 			return null;
 	}
@@ -136,6 +149,7 @@ public class BlockChunkLoader extends BlockContainer
 	{
         list.add(new ItemStack(this, 1, 0));
         list.add(new ItemStack(this, 1, 1));
+        list.add(new ItemStack(this, 1, 2));
 	}
 	
 	@Override

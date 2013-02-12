@@ -26,6 +26,8 @@ public class ItemChunkLoader extends ItemBlock
                 return "chickenChunkLoader";
             case 1:
                 return "chickenSpotLoader";
+            case 2:
+                return "PersonalChunkLoader";
         }
         return null;
     }
